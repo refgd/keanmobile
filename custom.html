@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Demo For Kean Mobile Application</title>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
+	<link rel="stylesheet" href="css/themes/default/jquery.mobile-1.4.2.min.css">
+	<script src="js/jquery.js"></script>
+	<script src="js/jquery.mobile-1.4.2.min.js"></script>
+	<script src="js/jquery.cookie.js"></script>
+</head>
+<body>
+<div data-role="page" data-dom-cache="false">
+	<div data-role="header" data-position="fixed" >
+		<a data-rel="back" class="ui-btn ui-btn-left ui-alt-icon ui-nodisc-icon ui-corner-all ui-btn-icon-notext ui-icon-carat-l">Back</a>
+        <h1>Custom</h1>
+    </div>
+    <div class="ui-content" role="main">
+		<form>
+			<fieldset data-role="controlgroup">
+				<legend>Personal:</legend>
+				<input type="checkbox" name="hideBlackboard" id="hideBlackboard" checked>
+				<label for="hideBlackboard">Blackboard 9</label>
+				<input type="checkbox" name="hideKeanGoogle" id="hideKeanGoogle" checked>
+				<label for="hideKeanGoogle">Kean Google</label>
+				<input type="checkbox" name="hideMyEvents" id="hideMyEvents" checked>
+				<label for="hideMyEvents">My Events</label>
+				<input type="checkbox" name="hideTutor" id="hideTutor" checked>
+				<label for="hideTutor">Tutor</label>
+				<input type="checkbox" name="hideStudentCard" id="hideStudentCard" checked>
+				<label for="hideStudentCard">Student Card</label>
+			</fieldset>
+			
+			<fieldset data-role="controlgroup">
+				<legend>News & Events:</legend>
+				<input type="checkbox" name="hideSchoolNews" id="hideSchoolNews" checked>
+				<label for="hideSchoolNews">School News & Events</label>
+				<input type="checkbox" name="hideOrgNews" id="hideOrgNews" checked>
+				<label for="hideOrgNews">Organizations News & Events</label>
+			</fieldset>
+		</form>
+	</div>
+	<script>
+		$(function(){
+			/*
+			//if($.cookie('hidePersonal', Number)){
+				$("#hidePersonal").attr("data-cacheval", "true");
+				console.log($("#hidePersonal").attr("data-cacheval"));
+			//}
+			if($.cookie('hideNews', Number)){
+				$("input[name='news']").removeAttr("checked"); 
+			}*/
+			var hideCookies = $.cookie();
+			for (var hi in hideCookies)
+			{
+				try{
+					if(hi.indexOf('hide')==0 && $.cookie(hi, Number) == 1){
+						$("#"+hi).removeAttr("checked").checkboxradio("refresh");
+					}
+				}catch(e){
+				}
+			}
+			$("input[type='checkbox']").bind("click", function () {
+				var hi = $(this).attr('name');
+				var lih = $("#li"+hi);
+                if ($(this).is(":checked")) {
+                    $.cookie(hi, 0);
+					if(lih){
+						lih.css("display","block");
+					}
+                }else{
+                    $.cookie(hi, 1);
+					if(lih){
+						lih.css("display","none");
+					}
+				}
+            });
+		});
+	</script>
+</div>
+</body>
+</html>

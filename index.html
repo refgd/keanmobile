@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="css/themes/default/jquery.mobile-1.4.2.min.css">
 	<style>
 		.menu-ui1 a{
-			background: transparent url('images/icons/sb_email.png') no-repeat 5px center;
+			background: transparent url('images/icons/sb_athletics.png') no-repeat 5px center;
 			background-size: 32px 32px;
 			padding-left: 50px;
 		}
@@ -18,7 +18,7 @@
 			padding-left: 50px;
 		}
 		.menu-ui3 a{
-			background: transparent url('images/icons/sb_directory.png') no-repeat 5px center;
+			background: transparent url('images/icons/sb_kean_library.png') no-repeat 5px center;
 			background-size: 32px 32px;
 			padding-left: 50px;
 		}
@@ -27,31 +27,45 @@
 			background-size: 32px 32px;
 			padding-left: 50px;
 		}
+		.menu-ui5 a{
+			background: transparent url('images/icons/sb_directory.png') no-repeat 5px center;
+			background-size: 32px 32px;
+			padding-left: 50px;
+		}
 	</style>
 	<script src="js/jquery.js"></script>
 	<script src="js/jquery.mobile-1.4.2.min.js"></script>
+	<script src="js/jquery.touchSwipe.min.js"></script>
+	<script src="js/jquery.cookie.js"></script>
 	<script>
 		$(function(){
-		  // Bind the swipeleftHandler callback function to the swipe event on div.box
-		  $( "#page" ).on( "swipeleft", swipeleftHandler );
-		 
-		  // Callback function references the event target and adds the 'swipeleft' class to it
-		  function swipeleftHandler( event ){
-			$( "#left-panel" ).panel( "close" );
-		  }
-		  
-		  // Bind the swipeleftHandler callback function to the swipe event on div.box
-		  $( "#page" ).on( "swiperight", swiperightHandler );
-		 
-		  // Callback function references the event target and adds the 'swipeleft' class to it
-		  function swiperightHandler( event ){
-			$( "#left-panel" ).panel( "open" );
-		  }
+			$("#page").swipe( {
+				//Generic swipe handler for all directions
+				swipeLeft:function(event, direction, distance, duration, fingerCount) {
+					$( "#left-panel" ).panel( "close" );	
+				},
+				swipeRight:function(event, direction, distance, duration, fingerCount) {
+					$( "#left-panel" ).panel( "open" );					
+				},
+				//Default is 75px, set to 0 for demo so any distance triggers swipe
+			   threshold:75
+			   //excludedElements:""
+			});
+			var ppc = 5;
+			var hideCookies = $.cookie();
+			for (var hi in hideCookies)
+			{
+				if(hi.indexOf('hide')==0 && $.cookie(hi, Number) == 1){
+					$("#li"+hi).css("display","none");
+					ppc--;
+				}
+			}
+			$("#pcount").html(ppc);
 		});
 	</script>
 </head>
 <body>
-<div id="page" data-role="page">
+<div id="page" data-role="page" data-dom-cache="false">
 	<div data-role="header" data-position="fixed" >
 		<a href="#left-panel" class="ui-btn ui-btn-left ui-alt-icon ui-nodisc-icon ui-corner-all ui-btn-icon-notext ui-icon-bullets">Menu</a>
         <h1>Kean University</h1>
@@ -59,26 +73,38 @@
     </div>
     <div class="ui-content" role="main">
 		<ul data-role="listview" data-inset="false">
-			<li data-role="list-divider">Personal <span class="ui-li-count">3</span></li>
-			<li>
+			<li data-role="list-divider">Personal <span id="pcount" class="ui-li-count">5</span></li>
+			<li id="lihideBlackboard">
 				<a href="page.html" data-prefetch="true" data-transition="flip">
 					<img src="images/icons/Blackboard_logo.png">
 				<h2>Blackboard 9</h2>
 				<p>2 Homework need submit</p></a>
 			</li>
-			<li>
+			<li id="lihideKeanGoogle">
+				<a href="page.html" data-prefetch="true" data-transition="flip">
+					<img src="images/icons/email-icon.jpg">
+				<h2>Kean Google</h2>
+				<p>You have 1 new email</p></a>
+			</li>
+			<li id="lihideMyEvents">
 				<a href="page.html" data-prefetch="true" data-transition="flip">
 					<img src="images/icons/Calendar-Planning-photo.jpg">
-				<h2>Event</h2>
+				<h2>My Events</h2>
 				<p>you have a group meeting at 14:00PM</p></a>
 			</li>
-			<li>
+			<li id="lihideTutor">
 				<a href="page.html" data-prefetch="true" data-transition="flip">
 					<img src="images/icons/image483.png">
 				<h2>Tutor</h2>
 				<p>At 11:00 PM.</p></a>
 			</li>
-			<li data-role="list-divider">News & Events<span class="ui-li-count">2</span></li>
+			<li id="lihideStudentCard">
+				<a href="page.html" data-prefetch="true" data-transition="flip">
+					<img src="images/icons/keanid.jpg">
+				<h2>Student Card</h2>
+				<p>Check Balance</p></a>
+			</li>
+			<li data-role="list-divider">News & Events<span class="ui-li-count">7</span></li>
 			<li>
 				<a href="page.html" data-prefetch="true" data-transition="flip">
 					<img src="images/icons/sb_kean_cougar.png">
@@ -91,6 +117,36 @@
 				<h2>Events</h2>
 				<p>some school events</p></a>
 			</li>
+			<li>
+				<a href="page.html" data-prefetch="true" data-transition="flip">
+					<img src="images/icons/sb_kean_cougar.png">
+				<h2>News</h2>
+				<p>some news</p></a>
+			</li>
+			<li>
+				<a href="page.html" data-prefetch="true" data-transition="flip">
+					<img src="images/icons/sb_kean_cougar.png">
+				<h2>News</h2>
+				<p>some news</p></a>
+			</li>
+			<li>
+				<a href="page.html" data-prefetch="true" data-transition="flip">
+					<img src="images/icons/sb_kean_cougar.png">
+				<h2>News</h2>
+				<p>some news</p></a>
+			</li>
+			<li>
+				<a href="page.html" data-prefetch="true" data-transition="flip">
+					<img src="images/icons/sb_kean_cougar.png">
+				<h2>News</h2>
+				<p>some news</p></a>
+			</li>
+			<li>
+				<a href="page.html" data-prefetch="true" data-transition="flip">
+					<img src="images/icons/sb_kean_cougar.png">
+				<h2>News</h2>
+				<p>some news</p></a>
+			</li>
 		</ul>
 	</div>
 	
@@ -98,10 +154,10 @@
 		<img src="images/about_logo.png" style="width:100%;margin-bottom:15px"></img>
         <ul data-role="listview">
         	<li class="menu-ui1">
-				<a href="page.html" data-prefetch="true" data-transition="flip">Kean Google</a>
+				<a href="about.html" data-prefetch="true" data-transition="flip">About Kean</a>
 			</li>
         	<li class="menu-ui2">
-				<a href="page.html" data-prefetch="true" data-transition="flip">Kean WISE</a>
+				<a href="keanwise.html" data-prefetch="true" data-transition="flip">Kean WISE</a>
 			</li>
         	<li class="menu-ui3">
 				<a href="page.html" data-prefetch="true" data-transition="flip">Library</a>
@@ -109,12 +165,15 @@
         	<li class="menu-ui4">
 				<a href="page.html" data-prefetch="true" data-transition="flip">Map</a>
 			</li>
+        	<li class="menu-ui5">
+				<a href="page.html" data-prefetch="true" data-transition="flip">Directory</a>
+			</li>
         </ul>
 		<div style="width:99%;position:absolute;bottom:0px;left:0px;">
 			<div data-role="navbar">
 				<ul>
 					<li><a href="#" data-icon="user">Login</a></li>
-					<li><a href="#" data-icon="gear">Setting</a></li>
+					<li><a href="setting.html" data-icon="gear">Setting</a></li>
 				</ul>
 			</div><!-- /navbar -->
 		</div><!-- /footer -->
